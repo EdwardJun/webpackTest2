@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const baseConfig = require('../webpack.config')
@@ -9,56 +10,9 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const utils = require('./utils')
 
 // process.env.NODE_ENV = 'production'
-const webpackConfig = merge(baseConfig, {
+const prodWebpackConfig = merge(baseConfig, {
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              minimize: true,
-            }
-          }
-          /* {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          },
-          "css-loader" */
-          /* MiniCssExtractPlugin.loader,
-          "css-loader" */
-        ]
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              minimize: true,
-            }
-          },
-          'less-loader'
-        ]
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: "css-loader",
-            options: {
-              minimize: true,
-            }
-          },
-          'sass-loader'
-        ]
-      }
     ]
   },
   plugins: [
@@ -81,12 +35,12 @@ const webpackConfig = merge(baseConfig, {
       sourceMap: config.build.productionSourceMap,
       parallel: true
     }),
-    new MiniCssExtractPlugin({
-      /* filename: "[name].css",
-      chunkFilename: "[id].css" */
-      filename: utils.assetsPath('css/[name].[contenthash:8].css')
+    new webpack.DefinePlugin({
+      'process.env': {
+          'NODE_ENV': JSON.stringify("production")
+      }
     })
   ]
 })
 
-module.exports = webpackConfig
+module.exports = prodWebpackConfig

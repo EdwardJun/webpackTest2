@@ -3,6 +3,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const utils = require('./build/utils')
 const config = require('./config')
+const VueLoaderPlugin  = require('vue-loader/lib/plugin')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const DashboardPlugin = require('webpack-dashboard/plugin')
 // 用于区分线上环境还是开发环境 true 为线上环境，false 为开发环境
 const isProd = process.env.NODE_ENV === 'production';
@@ -12,10 +14,8 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 console.log('isProd', isProd)
-/* console.log('env', config.build.assetsRoot) */
 
 module.exports = {
-  // mode: 'development',
   devtool: 'source-map',
   entry: './src/main.js',
   output: {
@@ -24,7 +24,6 @@ module.exports = {
     filename: '[name].js',
     // chunkFilename: 'js/[name].[chunkhash:5].min.js'
     publicPath: isProd ? config.build.assetsPublicPath : config.dev.assetsPublicPath
-    // publicPath: '/dist/'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -37,81 +36,29 @@ module.exports = {
   },
   module: {
     rules: [
-      /* {
-      test: /\.js$/,
-      use: [
-          'babel-loader',
-      ],
-      include: [
-        path.resolve(__dirname, "src")
-      ],
-      //exclude是定义不希望babel处理的文件  
-      exclude: '/node_modules/'
-      // exclude: path.resolve(__dirname, "node_modules")
-    },{
-      test: /\.css$/,
-      use: [
-          'style-loader',
-          'css-loader',
-      ]
-    },{
-      test: /\.less$/,
-      use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-      ]
-    },{
-      test: /\.scss$/,
-      use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-      ]
-    },{
-      test: /\.(png|jpg|gif)$/,
-      use: [{
-          loader: 'url-loader',
-          //使用插件时带上的参数
-          options: {
-              limit: 8192,
-              name: 'img/[name].[hash:4].[ext]',
-          }
-      }]
-    },{
-      test: /\.html$/,
-      use: [
-          'html-loader'
-      ]
-    } */
     {
-      test: /\.css$/,
+      test: /\.vue$/,
+      loader: 'vue-loader'
+    },
+    {
+      test: /\.(sa|sc|c|le)ss$/,
       use: [
-        'style-loader',
+        !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
         'css-loader',
-      ]
+        'postcss-loader',
+        'sass-loader',
+        // 'less-loader'
+      ],
     },
     {
-      test: /\.less$/,
-      use: [
-          'style-loader',
-          'css-loader',
-          'less-loader'
-      ]
-    },
-    {
-      test: /\.scss$/,
-      use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader'
-      ]
-    },
-    {// 对src和test文件夹下的.js文件使用babel-loader将es6+的代码转成es5
       test: /\.js$/,
-      loader: 'babel-loader',
-      include: [resolve('src'), resolve('test')],
-      exclude: '/node_modules/'
+      use: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['es2015']
+        }
+      }],
+      exclude: /node_modules/
     },
     {
       test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -151,6 +98,11 @@ module.exports = {
           removeAttributeQuotes: true // 移除HTML中的属性引号
       }
     }),
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: utils.assetsPath('css/[name].[contenthash:8].css'),
+      allChunks: true
+    })
     // new DashboardPlugin()
   ]
 }

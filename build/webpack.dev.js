@@ -38,7 +38,7 @@ module.exports = new Promise((resolve, reject) => {
           messages: [`Your application is running here: http://${devWebpackConfig.devServer.host}:${port}`],
         },
         onErrors: () => {
-          console.log('打包失败')
+          console.log('编译失败')
         }
       }))
       resolve(devWebpackConfig)
