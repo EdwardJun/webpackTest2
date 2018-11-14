@@ -5,8 +5,13 @@ body {
 .pic {
   width: 50px;
   height: 50px;
-  // background-image: url('../assets/gift.jpg');
+  background-image: url('./assets/gift.jpg');
   background-size: 50px 50px;
+}
+.pic2 {
+  width: 80px;
+  height: 80px;
+  background-size: 80px 80px;
 }
 .wrap {
   display: flex;
@@ -20,4 +25,9 @@ body {
   span {
     flex: 1;
   }
+}
+.isPurifyCss {
+  width: 30px;
+  height: 30px;
+  background-color: red;
 }

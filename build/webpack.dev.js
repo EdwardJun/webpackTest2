@@ -15,6 +15,8 @@ const devWebpackConfig = merge(baseConfig, {
     port: config.dev.port,
     hot: true,
     overlay: true,
+    stats: "errors-only",
+    // clientLogLevel: 'warning',
     watchOptions: {
       // 排除一些文件监听，这有利于提高性能
       // 这里排除了 node_modules 文件夹的监听

@@ -1,10 +1,13 @@
 const path = require('path')
+const glob = require('glob');
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const utils = require('./build/utils')
 const config = require('./config')
 const VueLoaderPlugin  = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurifyCSSPlugin = require('purifycss-webpack');
+// const htmlLoader = require('html-loader');
 // const DashboardPlugin = require('webpack-dashboard/plugin')
 // 用于区分线上环境还是开发环境 true 为线上环境，false 为开发环境
 const isProd = process.env.NODE_ENV === 'production';
@@ -13,6 +16,18 @@ const isProd = process.env.NODE_ENV === 'production';
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
+
+const createLintingRule = () => ({
+  test: /\.(js|vue)$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  // include: [resolve('src'), resolve('test')],
+  exclude: /node_modules/,
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
 console.log('isProd', isProd)
 
 module.exports = {
@@ -36,6 +51,7 @@ module.exports = {
   },
   module: {
     rules: [
+    ...(config.dev.useEslint ? [createLintingRule()] : []),
     {
       test: /\.vue$/,
       loader: 'vue-loader'
@@ -48,7 +64,7 @@ module.exports = {
         'postcss-loader',
         'sass-loader',
         // 'less-loader'
-      ],
+      ]
     },
     {
       test: /\.js$/,
@@ -85,7 +101,7 @@ module.exports = {
         limit: 10000,
         name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
       }
-    }
+    },
   ]
   },
   plugins: [
@@ -102,6 +118,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash:8].css'),
       allChunks: true
+    }),
+    new PurifyCSSPlugin({
+      paths: glob.sync(path.join(__dirname, 'src/*.vue')),
     })
     // new DashboardPlugin()
   ]

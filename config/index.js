@@ -15,7 +15,9 @@ module.exports = {
     poll: false,
     devtool: 'cheap-module-eval-source-map',
     cacheBusting: true,
-    cssSourceMap: true
+    cssSourceMap: true,
+    useEslint: true,
+    showEslintErrorsInOverlay: true
   },
   build: {
     // html入口文件
