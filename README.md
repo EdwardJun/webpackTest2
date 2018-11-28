@@ -1,5 +1,7 @@
 # webpack
 
+> webpack 4.0 搭建
+
  1. 命令搭建
        ① npm init
        ② cnpm install wepack  wepack-cli
