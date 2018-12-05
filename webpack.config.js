@@ -37,7 +37,7 @@ module.exports = {
     // path: path.resolve(__dirname, './dist'),
     path: config.build.assetsRoot,
     filename: '[name].js',
-    // chunkFilename: 'js/[name].[chunkhash:5].min.js'
+    chunkFilename: 'js/[id].[chunkhash:5].min.js',
     publicPath: isProd ? config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
