@@ -1,6 +1,12 @@
 # webpack
 
+<<<<<<< HEAD
 # 1. 命令搭建
+=======
+> webpack 4.0 搭建
+
+ 1. 命令搭建
+>>>>>>> bdb964cb392812c81c2032ef41f3a1125cddf9af
        ① npm init
        ② cnpm install wepack  wepack-cli
 
@@ -128,4 +134,8 @@ const createLintingRule = () => ({
 })
 然后在 module 进行配置使用
 
+<<<<<<< HEAD
 # config.dev.useEslint 为是否使用 eslint
+=======
+config.dev.useEslint 为是否使用 eslint
+>>>>>>> bdb964cb392812c81c2032ef41f3a1125cddf9af
