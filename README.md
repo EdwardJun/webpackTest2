@@ -1,12 +1,8 @@
 # webpack
 
-<<<<<<< HEAD
-# 1. 命令搭建
-=======
 > webpack 4.0 搭建
 
  1. 命令搭建
->>>>>>> bdb964cb392812c81c2032ef41f3a1125cddf9af
        ① npm init
        ② cnpm install wepack  wepack-cli
 
