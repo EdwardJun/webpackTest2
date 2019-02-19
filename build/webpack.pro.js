@@ -14,6 +14,7 @@ const utils = require('./utils')
 
 // process.env.NODE_ENV = 'production'
 const prodWebpackConfig = merge(baseConfig, {
+  mode: 'production',
   module: {
     rules: [
     ]

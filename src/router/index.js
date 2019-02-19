@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Global from '../libs/global'
 // import store from '../store/index' // 直接引入的方式
 // import Club from '@/components/Club'
-
+console.log('dddddddddddddd')
 Vue.use(Router)
 let _global = Global.data
 

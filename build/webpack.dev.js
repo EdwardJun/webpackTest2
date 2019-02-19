@@ -8,6 +8,7 @@ const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 const portfinder = require("portfinder");
 
 const devWebpackConfig = merge(baseConfig, {
+  mode: 'development',
   devServer: {
     // host: 'localhost',
     // port: 8083,

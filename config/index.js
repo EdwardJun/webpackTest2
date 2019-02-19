@@ -13,7 +13,7 @@ module.exports = {
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false,
-    devtool: 'cheap-module-eval-source-map',
+    devtool: 'eval-source-map',
     cacheBusting: true,
     cssSourceMap: true,
     useEslint: true,
