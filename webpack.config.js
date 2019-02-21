@@ -1,7 +1,7 @@
 const path = require('path')
 const glob = require('glob');
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 const utils = require('./build/utils')
 const config = require('./config')
 const VueLoaderPlugin  = require('vue-loader/lib/plugin')
@@ -32,14 +32,18 @@ console.log('isProd', isProd)
 
 module.exports = {
   devtool: 'source-map',
-  entry: './src/main.js',
-  output: {
-    // path: path.resolve(__dirname, './dist'),
-    path: config.build.assetsRoot,
-    filename: '[name].js',
-    chunkFilename: 'js/[id].[chunkhash:5].min.js',
-    publicPath: isProd ? config.build.assetsPublicPath : config.dev.assetsPublicPath
+  // entry: './src/main.js',
+  entry: {
+    app: './src/page/index/index.js',
+    other: './src/page/other/other.js'
   },
+  // output: {
+  //   // path: path.resolve(__dirname, './dist'),
+  //   path: config.build.assetsRoot,
+  //   filename: '[name].js',
+  //   chunkFilename: 'js/[id].[chunkhash:5].min.js',
+  //   publicPath: isProd ? config.build.assetsPublicPath : config.dev.assetsPublicPath
+  // },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     // 别名，方便引用模块，例如有了别名之后，
@@ -59,7 +63,8 @@ module.exports = {
     {
       test: /\.(sa|sc|c|le)ss$/,
       use: [
-        !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
+        // !isProd ? 'style-loader' : MiniCssExtractPlugin.loader,
+        'style-loader',
         'css-loader',
         'postcss-loader',
         'sass-loader',
@@ -105,20 +110,33 @@ module.exports = {
   ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'), // 配置文件模板
-      minify: {
-          minifyCSS: true,
-          minifyJS: true,
-          collapseWhitespace: true, // 删除空白符与换行符
-          removeAttributeQuotes: true // 移除HTML中的属性引号
-      }
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, './src/index.html'), // 配置文件模板
+    //   minify: {
+    //       minifyCSS: true,
+    //       minifyJS: true,
+    //       collapseWhitespace: true, // 删除空白符与换行符
+    //       removeAttributeQuotes: true // 移除HTML中的属性引号
+    //   },
+    //   chunksSortMode: 'dependency',
+    //   chunks: ['manifest', 'vendor', 'app']
+    // }),
+    // new HtmlWebpackPlugin({
+    //   template: path.resolve(__dirname, './src/index.html'), // 配置文件模板
+    //   minify: {
+    //       minifyCSS: true,
+    //       minifyJS: true,
+    //       collapseWhitespace: true, // 删除空白符与换行符
+    //       removeAttributeQuotes: true // 移除HTML中的属性引号
+    //   },
+    //   chunksSortMode: 'dependency',
+    //   chunks: ['manifest', 'vendor', 'other']
+    // }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash:8].css'),
-      allChunks: true
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: utils.assetsPath('css/[name].[contenthash:8].css'),
+    //   allChunks: true
+    // }),
     new PurifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, 'src/*.vue')),
     })

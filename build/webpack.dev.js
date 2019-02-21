@@ -6,26 +6,60 @@ const config = require('../config/index')
 const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
 // 获取一个可用的 port 的插件
 const portfinder = require("portfinder");
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
+const path = require('path')
+const utils = require('./utils')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const devWebpackConfig = merge(baseConfig, {
   mode: 'development',
+  output: {
+    path: config.build.assetsRoot,
+    filename: '[name].js'
+  },
   devServer: {
     // host: 'localhost',
     // port: 8083,
     host: config.dev.host,
     port: config.dev.port,
     hot: true,
-    overlay: true,
+    // contentBase: './dist'
+    // overlay: true,
     stats: "errors-only",
-    clientLogLevel: 'error',
-    watchOptions: {
-      // 排除一些文件监听，这有利于提高性能
-      // 这里排除了 node_modules 文件夹的监听
-      ignored: /node_modules/
-    }
+    // clientLogLevel: 'error',
+    // watchOptions: {
+    //   // 排除一些文件监听，这有利于提高性能
+    //   // 这里排除了 node_modules 文件夹的监听
+    //   ignored: /node_modules/
+    // }
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    // new CleanWebpackPlugin(['dist'], {
+    //   root: path.resolve(__dirname, '../')
+    // }),
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: config.build.assetsSubDirectory,
+        ignore: ['.*']
+      }
+    ]),
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/page/index/index.html'), // 配置文件模板
+      filename: config.build.index,
+      inject: true,
+      chunks: ['app'],
+      excludeChunks: ['other']
+    }),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../src/page/other/other.html'), // 配置文件模板
+      filename: config.build.other,
+      inject: true,
+      chunks: ['other'],
+      excludeChunks: ['app']
+    })
   ]
 })
 

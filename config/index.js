@@ -22,6 +22,7 @@ module.exports = {
   build: {
     // html入口文件
     index: path.resolve(__dirname, '../dist/index.html'),
+    other: path.resolve(__dirname, '../dist/other.html'),
     // 产品文件的存放路径
     assetsRoot: path.resolve(__dirname, '../dist'),
     // 二级目录，存放静态资源文件的目录，位于dist文件夹下
