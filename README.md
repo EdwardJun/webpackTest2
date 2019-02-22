@@ -2,19 +2,19 @@
 
 > webpack 4.0 搭建
 
- 1. 命令搭建
+#  1. 命令搭建
        ① npm init
        ② cnpm install wepack  wepack-cli
 
 #  2. 项目文件结构
 
        
-#3. 配置 package.json
+#  3. 配置 package.json
   在 script 里添加上这两句话
   "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.js --mode development",
   "build": "cross-env NODE_ENV=production webpack --config build/webpack.pro.js --mode production"
 
-#4. 配置 webpack.config.js
+#  4. 配置 webpack.config.js
   在 webpack4 中，会默认寻找 webpack.config.js 这个文件，所以把开发环境与生产环境共同的配置就放在这个文件里
   ① 配置 resolve
       |- 配置文件扩展名
@@ -82,7 +82,7 @@
 需要如下插件
 
 
-#① 在项目根目录下新增一个文件 .eslintrc.js，内容如下
+#  ① 在项目根目录下新增一个文件 .eslintrc.js，内容如下
 module.exports = {
   root: true,
   parser: 'babel-eslint',
@@ -116,7 +116,7 @@ settings: {
     'html/indent': '+2',
 },
 
-# ② 在 webpack.config.js 下配置 eslint-loader
+#  ② 在 webpack.config.js 下配置 eslint-loader
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
   loader: 'eslint-loader',
@@ -130,4 +130,4 @@ const createLintingRule = () => ({
 })
 然后在 module 进行配置使用
 
-# config.dev.useEslint 为是否使用 eslint
+#  config.dev.useEslint 为是否使用 eslint
