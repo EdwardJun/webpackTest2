@@ -27,12 +27,12 @@ const devWebpackConfig = merge(baseConfig, {
     // contentBase: './dist'
     // overlay: true,
     stats: "errors-only",
-    // clientLogLevel: 'error',
-    // watchOptions: {
-    //   // 排除一些文件监听，这有利于提高性能
-    //   // 这里排除了 node_modules 文件夹的监听
-    //   ignored: /node_modules/
-    // }
+    clientLogLevel: 'error',
+    watchOptions: {
+      // 排除一些文件监听，这有利于提高性能
+      // 这里排除了 node_modules 文件夹的监听
+      ignored: /node_modules/
+    }
   },
   plugins: [
     // new CleanWebpackPlugin(['dist'], {
@@ -46,6 +46,7 @@ const devWebpackConfig = merge(baseConfig, {
       }
     ]),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../src/page/index/index.html'), // 配置文件模板
       filename: config.build.index,
